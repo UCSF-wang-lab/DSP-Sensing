@@ -1,0 +1,9 @@
+function table = ConvertDSPtxt(filename)
+    opts = detectImportOptions(filenane);
+    
+
+    table = readtable(filename);
+
+%     DSP_file = fopen(filename);
+%     table = fscanf(file, '%d');
+end
