@@ -1,6 +1,6 @@
 # DSP-Sensing
 
-Repository will handle the acquisition of sensor data on the teensy, its streaming and debugging/piloting of its synchronization with Summit RC+S neural data.
+Repository will handle the acquisition and streaming of sensor data on the teensy, as well as benchmarking and debugging its synchronization with Summit RC+S neural data.
 
 Teensy sensing and serial comm + keyboard is handled in C++, and Teensy code can be easily compiled using Teensyduino. Keyboard feature from Arduino interacts as standard keyboard with receiving laptop, and in our case is used to progress a motor learning task program.
 Laptop side of serial comm is handled in Python with pyserial.
