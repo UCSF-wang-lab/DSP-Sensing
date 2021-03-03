@@ -70,21 +70,21 @@ unsigned long RunTime = 2000;
 void setup() {
   setSyncProvider(getTeensy3Time);
   
-  pinMode(FSR1,INPUT);
-  pinMode(FSR2,INPUT);
-  pinMode(FSR3,INPUT);
-  pinMode(FSR4,INPUT);
-  pinMode(FSR5,INPUT);
+  pinMode(FSR1,INPUT_DISABLE);
+  pinMode(FSR2,INPUT_DISABLE);
+  pinMode(FSR3,INPUT_DISABLE);
+  pinMode(FSR4,INPUT_DISABLE);
+  pinMode(FSR5,INPUT_DISABLE);
 
-//  pinMode(Cap1, INPUT);
-//  pinMode(Cap2, INPUT);
-//  pinMode(Cap3, INPUT);
-//  pinMode(Cap4, INPUT);
-//  pinMode(Cap5, INPUT);
+//  pinMode(Cap1, INPUT_DISABLE);
+//  pinMode(Cap2, INPUT_DISABLE);
+//  pinMode(Cap3, INPUT_DISABLE);
+//  pinMode(Cap4, INPUT_DISABLE);
+//  pinMode(Cap5, INPUT_DISABLE);
 
-  pinMode(PhotoD,INPUT);
+  pinMode(PhotoD,INPUT_DISABLE);
   
-  pinMode(EEG, INPUT);
+  pinMode(EEG, INPUT_DISABLE);
   
   pinMode(Key1,INPUT);
   debouncer1.attach(Key1);
