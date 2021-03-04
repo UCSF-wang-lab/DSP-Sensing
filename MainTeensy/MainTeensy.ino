@@ -59,7 +59,7 @@ Bounce debouncer5 = Bounce();
 elapsedMicros LastScan;
 elapsedMicros SinceStart;
 
-unsigned long ScanSpace = 250;
+unsigned long ScanSpace = 2000;
 
 unsigned long time1;
 unsigned long time2;
@@ -155,19 +155,19 @@ void loop() {
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
-      Keyboard.write('1');
+      Keyboard.write('m');
     }
   //  if (Key2_val == HIGH && lastKey2 == LOW) {
   //    Keyboard.write('2');
   //  }
     if (Key3_val == HIGH && lastKey3 == LOW) {
-      Keyboard.write('3');
+      Keyboard.write(',');
     }
     if (Key4_val == HIGH && lastKey4 == LOW) {
-      Keyboard.write('4');
+      Keyboard.write('.');
     }
     if (Key5_val == HIGH && lastKey5 == LOW) {
-      Keyboard.write('5');
+      Keyboard.write('/');
     }
 
     lastKey1 = Key1_val;
