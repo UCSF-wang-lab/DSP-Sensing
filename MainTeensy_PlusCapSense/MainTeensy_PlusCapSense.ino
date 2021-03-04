@@ -65,7 +65,7 @@ Bounce debouncer5 = Bounce();
 elapsedMicros LastScan;
 elapsedMicros SinceStart;
 
-unsigned long ScanSpace = 250;
+unsigned long ScanSpace = 2000;
 
 unsigned long time1;
 unsigned long time2;
