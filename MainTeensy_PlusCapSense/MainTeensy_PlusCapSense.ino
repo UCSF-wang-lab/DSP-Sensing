@@ -16,19 +16,19 @@ const int FSR5 = 18;
 int FSR5_val;
 
 CapacitiveSensor Cap1 = CapacitiveSensor(19,20);
-long Cap1_Val;
+long Cap1_val;
 
 //CapacitiveSensor Cap2 = CapacitiveSensor(21,22);
-long Cap2_Val;
+long Cap2_val;
 
 CapacitiveSensor Cap3 = CapacitiveSensor(21,22);
-long Cap3_Val;
+long Cap3_val;
 
 CapacitiveSensor Cap4 = CapacitiveSensor(23,24);
-long Cap4_Val;
+long Cap4_val;
 
 CapacitiveSensor Cap5 = CapacitiveSensor(25,26);
-long Cap5_Val;
+long Cap5_val;
 
 
 const int PhotoD = 41;
@@ -71,7 +71,7 @@ unsigned long time1;
 unsigned long time2;
 unsigned long tottime;
 
-unsigned long RunTime = 2000;
+//unsigned long RunTime = 2000;
 
 void setup() {
   setSyncProvider(getTeensy3Time);
@@ -82,15 +82,15 @@ void setup() {
   pinMode(FSR4,INPUT_DISABLE);
   pinMode(FSR5,INPUT_DISABLE);
 
-  pinMode(19, INPUT_DISABLE);
+  pinMode(19, OUTPUT);
   pinMode(20, INPUT_DISABLE);
-//  pinMode(21, INPUT_DISABLE);
+//  pinMode(21, OUTPUT);
 //  pinMode(22, INPUT_DISABLE);
-  pinMode(21, INPUT_DISABLE);
+  pinMode(21, OUTPUT);
   pinMode(22, INPUT_DISABLE);
-  pinMode(23, INPUT_DISABLE);
+  pinMode(23, OUTPUT);
   pinMode(24, INPUT_DISABLE);
-  pinMode(25, INPUT_DISABLE);
+  pinMode(25, OUTPUT);
   pinMode(26, INPUT_DISABLE);
 
   pinMode(PhotoD,INPUT_DISABLE);
@@ -129,6 +129,7 @@ void setup() {
 
 void loop() {
 //  if (millis() < RunTime) {
+//time1 = micros();
 
   if (LastScan >= ScanSpace){
     LastScan = 0;
@@ -139,12 +140,12 @@ void loop() {
     FSR4_val = analogRead(FSR4);
     FSR5_val = analogRead(FSR5);
 
-    Cap1_Val = Cap1.capacitiveSensor(20);
-//    Cap2_Val = Cap2.capacitiveSensor(20);
+    Cap1_val = Cap1.capacitiveSensor(25);
+//    Cap2_Val = Cap2.capacitiveSensor(30);
     Cap2_val = 0;
-    Cap3_Val = Cap3.capacitiveSensor(20);
-    Cap4_Val = Cap4.capacitiveSensor(20);
-    Cap5_Val = Cap5.capacitiveSensor(20);
+    Cap3_val = Cap3.capacitiveSensor(25);
+    Cap4_val = Cap4.capacitiveSensor(25);
+    Cap5_val = Cap5.capacitiveSensor(25);
 
     PhotoD_val = analogRead(PhotoD);
 
@@ -170,19 +171,19 @@ void loop() {
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
-      Keyboard.write('1');
+      Keyboard.write('m');
     }
   //  if (Key2_val == HIGH && lastKey2 == LOW) {
   //    Keyboard.write('2');
   //  }
     if (Key3_val == HIGH && lastKey3 == LOW) {
-      Keyboard.write('3');
+      Keyboard.write(',');
     }
     if (Key4_val == HIGH && lastKey4 == LOW) {
-      Keyboard.write('4');
+      Keyboard.write('.');
     }
     if (Key5_val == HIGH && lastKey5 == LOW) {
-      Keyboard.write('5');
+      Keyboard.write('/');
     }
 
     lastKey1 = Key1_val;
