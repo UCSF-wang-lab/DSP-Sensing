@@ -123,7 +123,7 @@ void setup() {
   Keyboard.begin();
 
   delay(10000);
-  Serial.println("FSR1,FSR2,FSR3,FSR4,FSR5,Cap1,Cap2,Cap3,Cap4,Cap5,PhotoD,EEG,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
+  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
 }
 
@@ -164,9 +164,8 @@ void loop() {
     Key5_val = debouncer5.read();
 
 
-    // print timestamps: FSR1_val, FSR2_val, ..., Cap1_val, ..., PhotoD_val, EEG_val, Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
-    Report = String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(PhotoD_val)+","+String(EEG_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
-//    Report = String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(PhotoD_val)+","+String(EEG_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(micros())+","+String(ARM_DWT_CYCCNT)+","+String(now());
+    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
+    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
     Serial.println(Report);
     
     // keyboard interaction with computer
