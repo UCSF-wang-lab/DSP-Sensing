@@ -15,10 +15,10 @@ int FSR4_val;
 const int FSR5 = 18;
 int FSR5_val;
 
-CapacitiveSensor Cap1 = CapacitiveSensor(19,20);
+//CapacitiveSensor Cap1 = CapacitiveSensor(19,20);
 long Cap1_val;
 
-//CapacitiveSensor Cap2 = CapacitiveSensor(21,22);
+CapacitiveSensor Cap2 = CapacitiveSensor(19,20);
 long Cap2_val;
 
 CapacitiveSensor Cap3 = CapacitiveSensor(21,22);
@@ -31,11 +31,13 @@ CapacitiveSensor Cap5 = CapacitiveSensor(25,26);
 long Cap5_val;
 
 
+const int EEG = 40;
+int EEG_val;
+
+
 const int PhotoD = 41;
 int PhotoD_val;
 
-const int EEG = 40;
-int EEG_val;
 
 const int Key1 = 2;
 int Key1_val;
@@ -84,10 +86,10 @@ void setup() {
   pinMode(FSR4,INPUT_DISABLE);
   pinMode(FSR5,INPUT_DISABLE);
 
-  pinMode(19, OUTPUT);
-  pinMode(20, INPUT_DISABLE);
 //  pinMode(21, OUTPUT);
 //  pinMode(22, INPUT_DISABLE);
+  pinMode(19, OUTPUT);
+  pinMode(20, INPUT_DISABLE);
   pinMode(21, OUTPUT);
   pinMode(22, INPUT_DISABLE);
   pinMode(23, OUTPUT);
@@ -115,8 +117,8 @@ void setup() {
   debouncer5.attach(Key5);
   debouncer5.interval(debounce_time); // interval in ms
 
-  Cap1.set_CS_Timeout_Millis(1);
-//  Cap2.set_CS_Timeout_Millis(1);
+//  Cap1.set_CS_Timeout_Millis(1);
+  Cap2.set_CS_Timeout_Millis(1);
   Cap3.set_CS_Timeout_Millis(1);
   Cap4.set_CS_Timeout_Millis(1);
   Cap5.set_CS_Timeout_Millis(1);
