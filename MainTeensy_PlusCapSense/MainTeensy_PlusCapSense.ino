@@ -65,7 +65,9 @@ Bounce debouncer5 = Bounce();
 elapsedMicros LastScan;
 elapsedMicros SinceStart;
 
-unsigned long ScanSpace = 2000;
+unsigned long ScanSpace = 250;
+
+const int debounce_time = 5;
 
 unsigned long time1;
 unsigned long time2;
@@ -99,19 +101,19 @@ void setup() {
   
   pinMode(Key1,INPUT);
   debouncer1.attach(Key1);
-  debouncer1.interval(5); // interval in ms
+  debouncer1.interval(debounce_time); // interval in ms
   pinMode(Key2,INPUT);
   debouncer2.attach(Key2);
-  debouncer2.interval(5); // interval in ms
+  debouncer2.interval(debounce_time); // interval in ms
   pinMode(Key3,INPUT);
   debouncer3.attach(Key3);
-  debouncer3.interval(5); // interval in ms
+  debouncer3.interval(debounce_time); // interval in ms
   pinMode(Key4,INPUT);
   debouncer4.attach(Key4);
-  debouncer4.interval(5); // interval in ms
+  debouncer4.interval(debounce_time); // interval in ms
   pinMode(Key5,INPUT);
   debouncer5.attach(Key5);
-  debouncer5.interval(5); // interval in ms
+  debouncer5.interval(debounce_time); // interval in ms
 
   Cap1.set_CS_Timeout_Millis(1);
 //  Cap2.set_CS_Timeout_Millis(1);
@@ -140,12 +142,16 @@ void loop() {
     FSR4_val = analogRead(FSR4);
     FSR5_val = analogRead(FSR5);
 
-    Cap1_val = Cap1.capacitiveSensor(25);
-//    Cap2_Val = Cap2.capacitiveSensor(30);
+//    Cap1_val = Cap1.capacitiveSensor(25);
+//    Cap2_Val = Cap2.capacitiveSensor(25);
+//    Cap3_val = Cap3.capacitiveSensor(25);
+//    Cap4_val = Cap4.capacitiveSensor(25);
+//    Cap5_val = Cap5.capacitiveSensor(25);
+    Cap1_val = 0;
     Cap2_val = 0;
-    Cap3_val = Cap3.capacitiveSensor(25);
-    Cap4_val = Cap4.capacitiveSensor(25);
-    Cap5_val = Cap5.capacitiveSensor(25);
+    Cap3_val = 0;
+    Cap4_val = 0;
+    Cap5_val = 0;
 
     PhotoD_val = analogRead(PhotoD);
 
@@ -158,7 +164,7 @@ void loop() {
     debouncer5.update();
 
     Key1_val = debouncer1.read();
-//    Key2_val = debouncer2.read();
+    Key2_val = debouncer2.read();
     Key3_val = debouncer3.read();
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
@@ -170,11 +176,11 @@ void loop() {
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
+      Keyboard.write('n');
+    }
+    if (Key2_val == HIGH && lastKey2 == LOW) {
       Keyboard.write('m');
     }
-  //  if (Key2_val == HIGH && lastKey2 == LOW) {
-  //    Keyboard.write('2');
-  //  }
     if (Key3_val == HIGH && lastKey3 == LOW) {
       Keyboard.write(',');
     }
