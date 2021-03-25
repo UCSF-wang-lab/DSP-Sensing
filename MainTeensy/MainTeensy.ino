@@ -4,8 +4,8 @@
 #include <CapacitiveSensor.h>
 
 // general timers
-elapsedMicros LastScan;
 elapsedMicros SinceStart;
+elapsedMicros LastScan
 
 // for sampling rate
 unsigned long ScanSpace = 250;
@@ -19,7 +19,7 @@ unsigned long tottime;
 unsigned long RunTime = 600000000;  // in micros
 unsigned long ScanSpace = 250;   // in micros
 unsigned long starttime;
-unsigned long iter = 1;
+//unsigned long iter = 1;
 unsigned long endtime;
 
 // pin labels
@@ -128,23 +128,15 @@ void setup() {
   delay(10000);
   Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
-  elapsedMicros LastScan;
-  elapsedMicros SinceStart;
+  starttime = micros();
+  endtime = starttime + RunTime;
+  
 }
 
 void loop() {
-
-
-  if (iter == 1) {
-    starttime = micros();
-    endtime = starttime + RunTime;
-    iter = iter + 1;
-//    Serial.println("here");
-  }
-
   
   if (micros() < endtime) {
-time1 = micros();
+//time1 = micros();
 
   if (LastScan >= ScanSpace){
     LastScan = 0;
@@ -181,6 +173,7 @@ time1 = micros();
     // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
     Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
     Serial.println(Report);
+
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
@@ -210,11 +203,11 @@ time1 = micros();
 //    FSR1_Report = "FSR1,"+String(FSR1_val)+","+String(micros())+","+String(ARM_DWT_CYCCNT)+","+String(now());
 //    Serial.println(FSR1_Report);
 
-//
-    time2 = micros();
-    tottime = time2-time1;
-    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
-    Serial.println(tottime);
+////
+//    time2 = micros();
+//    tottime = time2-time1;
+//    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
+//    Serial.println(tottime);
 
 
 //  }
