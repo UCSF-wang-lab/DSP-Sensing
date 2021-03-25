@@ -3,8 +3,9 @@ elapsedMicros LastScan;
 
 unsigned long RunTime = 1000000;  // in micros
 unsigned long ScanSpace = 250;   // in micros
+unsigned long n_samples = RunTime/ScanSpace;
 unsigned long starttime;
-unsigned long iter = 1;
+unsigned long sample = 1;
 unsigned long endtime;
 unsigned long t1;
 unsigned long t2;
@@ -29,9 +30,11 @@ Serial.begin(9600);
 
 void loop() {    // only takes 17-18us to loop this
 
-  if (micros() < endtime) {
+//  if (micros() < endtime) {
 
       if (LastScan >= ScanSpace){
+      if (sample <= n_samples) {
+        sample = sample+1;
         LastScan = 0;
       
     //    delay(1);

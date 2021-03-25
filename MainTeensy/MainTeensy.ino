@@ -4,7 +4,7 @@
 
 // general timers
 elapsedMicros SinceStart;
-elapsedMicros LastScan
+elapsedMicros LastScan;
 
 // for sampling rate
 unsigned long ScanSpace = 250;
@@ -16,9 +16,9 @@ unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
 unsigned long RunTime = 600000000;  // in micros
-unsigned long ScanSpace = 250;   // in micros
 unsigned long starttime;
-//unsigned long iter = 1;
+unsigned long sample = 1;
+unsigned long n_samples = RunTime/ScanSpace;
 unsigned long endtime;
 
 // pin labels
@@ -134,10 +134,12 @@ void setup() {
 
 void loop() {
   
-  if (micros() < endtime) {
+//  if (micros() < endtime) {
 //time1 = micros();
 
   if (LastScan >= ScanSpace){
+  if (sample <= n_samples) {
+    sample = sample+1;
     LastScan = 0;
     
     FSR1_val = analogRead(FSR1);
