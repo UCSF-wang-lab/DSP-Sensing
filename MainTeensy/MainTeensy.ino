@@ -1,7 +1,6 @@
 #include <TimeLib.h>
 #include <Bounce2.h>
 #include <Keyboard.h>
-#include <CapacitiveSensor.h>
 
 // general timers
 elapsedMicros SinceStart;

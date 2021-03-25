@@ -7,7 +7,7 @@ Created on Tue Mar  2 13:48:35 2021
 @author: karapresbrey
 """
 
-def PySerialStreamTeensy_good(serial_port, write_file_to):
+def ps(serial_port, write_file_to):
 
     import serial
     
