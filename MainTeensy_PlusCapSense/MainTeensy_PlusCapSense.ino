@@ -3,6 +3,25 @@
 #include <Keyboard.h>
 #include <CapacitiveSensor.h>
 
+// general timers
+elapsedMicros LastScan;
+elapsedMicros SinceStart;
+
+// for sampling rate
+unsigned long ScanSpace = 250;
+
+// for timing how long things take
+unsigned long time1;
+unsigned long time2;
+unsigned long tottime;
+
+// for predetermining how many samples there should be, for testing purposes
+unsigned long RunTime = 600000000;  // in micros
+unsigned long ScanSpace = 250;   // in micros
+unsigned long starttime;
+unsigned long iter = 1;
+unsigned long endtime;
+
 // pin labels
 const int FSR1 = 14;
 int FSR1_val;
@@ -55,27 +74,17 @@ const int Key5 = 6;
 int Key5_val;
 int lastKey5 = LOW;
 
-String Report;
-
 Bounce debouncer1 = Bounce(); 
 Bounce debouncer2 = Bounce(); 
 Bounce debouncer3 = Bounce(); 
 Bounce debouncer4 = Bounce(); 
 Bounce debouncer5 = Bounce(); 
 
-// timers
-elapsedMicros LastScan;
-elapsedMicros SinceStart;
-
-unsigned long ScanSpace = 250;
-
 const int debounce_time = 5;
 
-unsigned long time1;
-unsigned long time2;
-unsigned long tottime;
+String Report;
 
-//unsigned long RunTime = 2000;
+
 
 void setup() {
   setSyncProvider(getTeensy3Time);
@@ -128,11 +137,21 @@ void setup() {
 
   delay(10000);
   Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
-  
+
 }
 
 void loop() {
-//  if (millis() < RunTime) {
+
+
+  if (iter == 1) {
+    starttime = micros();
+    endtime = starttime + RunTime;
+    iter = iter + 1;
+//    Serial.println("here");
+  }
+
+  
+  if (micros() < endtime) {
 //time1 = micros();
 
   if (LastScan >= ScanSpace){
@@ -212,6 +231,7 @@ void loop() {
 
 
 //  }
+  }
   }
 }
 

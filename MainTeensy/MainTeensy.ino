@@ -1,6 +1,26 @@
 #include <TimeLib.h>
 #include <Bounce2.h>
 #include <Keyboard.h>
+#include <CapacitiveSensor.h>
+
+// general timers
+elapsedMicros LastScan;
+elapsedMicros SinceStart;
+
+// for sampling rate
+unsigned long ScanSpace = 250;
+
+// for timing how long things take
+unsigned long time1;
+unsigned long time2;
+unsigned long tottime;
+
+// for predetermining how many samples there should be, for testing purposes
+unsigned long RunTime = 600000000;  // in micros
+unsigned long ScanSpace = 250;   // in micros
+unsigned long starttime;
+unsigned long iter = 1;
+unsigned long endtime;
 
 // pin labels
 const int FSR1 = 14;
@@ -14,22 +34,30 @@ int FSR4_val;
 const int FSR5 = 18;
 int FSR5_val;
 
-const int Cap1 = 19;
-int Cap1_val;
-const int Cap2 = 20;
-int Cap2_val;
-const int Cap3 = 21;
-int Cap3_val;
-const int Cap4 = 22;
-int Cap4_val;
-const int Cap5 = 23;
-int Cap5_val;
 
-const int PhotoD = 24;
+const int Cap1 = 19;
+long Cap1_val;
+
+const int Cap2 = 20;
+long Cap2_val;
+
+const int Cap3 = 21;
+long Cap3_val;
+
+const int Cap4 = 22;
+long Cap4_val;
+
+const int Cap5 = 23;
+long Cap5_val;
+
+
+const int EEG = 40;
+int EEG_val;
+
+
+const int PhotoD = 41;
 int PhotoD_val;
 
-const int EEG = 25;
-int EEG_val;
 
 const int Key1 = 2;
 int Key1_val;
@@ -47,25 +75,17 @@ const int Key5 = 6;
 int Key5_val;
 int lastKey5 = LOW;
 
-String Report;
-
 Bounce debouncer1 = Bounce(); 
 Bounce debouncer2 = Bounce(); 
 Bounce debouncer3 = Bounce(); 
 Bounce debouncer4 = Bounce(); 
 Bounce debouncer5 = Bounce(); 
 
-// timers
-elapsedMicros LastScan;
-elapsedMicros SinceStart;
+const int debounce_time = 5;
 
-unsigned long ScanSpace = 2000;
 
-unsigned long time1;
-unsigned long time2;
-unsigned long tottime;
+String Report;
 
-unsigned long RunTime = 2000;
 
 void setup() {
   setSyncProvider(getTeensy3Time);
@@ -76,11 +96,11 @@ void setup() {
   pinMode(FSR4,INPUT_DISABLE);
   pinMode(FSR5,INPUT_DISABLE);
 
-//  pinMode(Cap1, INPUT_DISABLE);
-//  pinMode(Cap2, INPUT_DISABLE);
-//  pinMode(Cap3, INPUT_DISABLE);
-//  pinMode(Cap4, INPUT_DISABLE);
-//  pinMode(Cap5, INPUT_DISABLE);
+  pinMode(19, INPUT_DISABLE);
+  pinMode(20, INPUT_DISABLE);
+  pinMode(21, INPUT_DISABLE);
+  pinMode(22, INPUT_DISABLE);
+  pinMode(23, INPUT_DISABLE);
 
   pinMode(PhotoD,INPUT_DISABLE);
   
@@ -88,33 +108,43 @@ void setup() {
   
   pinMode(Key1,INPUT);
   debouncer1.attach(Key1);
-  debouncer1.interval(5); // interval in ms
+  debouncer1.interval(debounce_time); // interval in ms
   pinMode(Key2,INPUT);
   debouncer2.attach(Key2);
-  debouncer2.interval(5); // interval in ms
+  debouncer2.interval(debounce_time); // interval in ms
   pinMode(Key3,INPUT);
   debouncer3.attach(Key3);
-  debouncer3.interval(5); // interval in ms
+  debouncer3.interval(debounce_time); // interval in ms
   pinMode(Key4,INPUT);
   debouncer4.attach(Key4);
-  debouncer4.interval(5); // interval in ms
+  debouncer4.interval(debounce_time); // interval in ms
   pinMode(Key5,INPUT);
   debouncer5.attach(Key5);
-  debouncer5.interval(5); // interval in ms
-  
+  debouncer5.interval(debounce_time); // interval in ms
   
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
-
-  
   Keyboard.begin();
 
   delay(10000);
   Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
+  elapsedMicros LastScan;
+  elapsedMicros SinceStart;
 }
 
 void loop() {
-//  if (millis() < RunTime) {
+
+
+  if (iter == 1) {
+    starttime = micros();
+    endtime = starttime + RunTime;
+    iter = iter + 1;
+//    Serial.println("here");
+  }
+
+  
+  if (micros() < endtime) {
+time1 = micros();
 
   if (LastScan >= ScanSpace){
     LastScan = 0;
@@ -142,7 +172,7 @@ void loop() {
     debouncer5.update();
 
     Key1_val = debouncer1.read();
-//    Key2_val = debouncer2.read();
+    Key2_val = debouncer2.read();
     Key3_val = debouncer3.read();
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
@@ -150,14 +180,15 @@ void loop() {
 
     // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
     Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
+    Serial.println(Report);
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
+      Keyboard.write('n');
+    }
+    if (Key2_val == HIGH && lastKey2 == LOW) {
       Keyboard.write('m');
     }
-  //  if (Key2_val == HIGH && lastKey2 == LOW) {
-  //    Keyboard.write('2');
-  //  }
     if (Key3_val == HIGH && lastKey3 == LOW) {
       Keyboard.write(',');
     }
@@ -180,13 +211,14 @@ void loop() {
 //    Serial.println(FSR1_Report);
 
 //
-//    time2 = micros();
-//    tottime = time2-time1;
-//    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
-//    Serial.println(tottime);
+    time2 = micros();
+    tottime = time2-time1;
+    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
+    Serial.println(tottime);
 
 
 //  }
+  }
   }
 }
 
