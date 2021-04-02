@@ -178,19 +178,19 @@ void loop() {
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
-      Keyboard.write('n');
+      Keyboard.write('1');
     }
     if (Key2_val == HIGH && lastKey2 == LOW) {
-      Keyboard.write('m');
+      Keyboard.write('2');
     }
     if (Key3_val == HIGH && lastKey3 == LOW) {
-      Keyboard.write(',');
+      Keyboard.write('3');
     }
     if (Key4_val == HIGH && lastKey4 == LOW) {
-      Keyboard.write('.');
+      Keyboard.write('4');
     }
     if (Key5_val == HIGH && lastKey5 == LOW) {
-      Keyboard.write('/');
+      Keyboard.write('5');
     }
 
     lastKey1 = Key1_val;
