@@ -124,8 +124,8 @@ void setup() {
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
   Keyboard.begin();
 
-  delay(5000);
-//  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
+  delay(10000);
+  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
   starttime = micros();
   endtime = starttime + RunTime;
@@ -138,20 +138,15 @@ void loop() {
 //time1 = micros();
 
   if (LastScan >= ScanSpace){
-  if (sample <= n_samples) {
-    sample = sample+1;
+//  if (sample <= n_samples) {
+//    sample = sample+1;
     LastScan = 0;
     
     FSR1_val = analogRead(FSR1);
-//    FSR1_val = analogRead(FSR1);
     FSR2_val = analogRead(FSR2);
-//    FSR2_val = analogRead(FSR2);
     FSR3_val = analogRead(FSR3);
-//    FSR3_val = analogRead(FSR3);
     FSR4_val = analogRead(FSR4);
-//    FSR4_val = analogRead(FSR4);
     FSR5_val = analogRead(FSR5);
-//    FSR5_val = analogRead(FSR5);
 
 //    Cap1_val = analogRead(Cap1);
 //    Cap2_val = analogRead(Cap2);
@@ -159,10 +154,19 @@ void loop() {
 //    Cap4_val = analogRead(Cap4);
 //    Cap5_val = analogRead(Cap5);
 
-//    PhotoD_val = analogRead(PhotoD);
-//    PhotoD_val = analogRead(PhotoD);
+    Cap1_val = 0;
+    Cap2_val = 0;
+    Cap3_val = 0;
+    Cap4_val = 0;
+    Cap5_val = 0;
+
+    PhotoD_val = analogRead(PhotoD);
+    PhotoD_val = analogRead(PhotoD);
     PhotoD_val = analogRead(PhotoD);
 
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
 
     debouncer1.update();
@@ -177,11 +181,14 @@ void loop() {
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
 
-//
-//    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
-//    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
-//    Serial.println(Report);
-    Serial.println(EEG_val);
+
+    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
+    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
+    Serial.println(Report);
+//Serial.println(FSR1_val);
+
+    
+
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
@@ -219,7 +226,7 @@ void loop() {
 
 
 //  }
-  }
+//  }
   }
 }
 
