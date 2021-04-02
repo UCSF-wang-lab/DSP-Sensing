@@ -95,11 +95,11 @@ void setup() {
   pinMode(FSR4,INPUT_DISABLE);
   pinMode(FSR5,INPUT_DISABLE);
 
-  pinMode(19, INPUT_DISABLE);
-  pinMode(20, INPUT_DISABLE);
-  pinMode(21, INPUT_DISABLE);
-  pinMode(22, INPUT_DISABLE);
-  pinMode(23, INPUT_DISABLE);
+  pinMode(Cap1, INPUT_DISABLE);
+  pinMode(Cap2, INPUT_DISABLE);
+  pinMode(Cap3, INPUT_DISABLE);
+  pinMode(Cap4, INPUT_DISABLE);
+  pinMode(Cap5, INPUT_DISABLE);
 
   pinMode(PhotoD,INPUT_DISABLE);
   
