@@ -38,7 +38,7 @@ int FSR4_val;
 const int FSR5 = 18;
 int FSR5_val;
 
-
+// might be able to change this variable type for the caps
 const int Cap1 = 19;
 long Cap1_val;
 
@@ -129,29 +129,40 @@ void setup() {
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
   Keyboard.begin();
 
-  delay(1000);
+  delay(10000);
   Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
-  starttime = micros();
-  endtime = starttime + RunTime;
-  
+//  starttime = micros();
+//  endtime = starttime + RunTime;
+
 }
 
 void loop() {
   
 //  if (micros() < endtime) {
-time1 = micros();
+//time1 = micros();
 
+  // i am too fucking tired to figure out why, but having the first part with lastscan>=scanspace ensures that it is always a 250us diff between samples even tho it always evaluates to true no matter what
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
+//  if((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1))){
 //  if (sample <= n_samples) {
 //    sample = sample+1;
-    LastScan = 0;
-    
-    FSR1_val = analogRead(FSR1);
-    FSR2_val = analogRead(FSR2);
-    FSR3_val = analogRead(FSR3);
-    FSR4_val = analogRead(FSR4);
-    FSR5_val = analogRead(FSR5);
+    LastScan = LastScan-ScanSpace;
+
+//    Serial.println(String(LastScan));
+
+    elmicros = String(SinceStart);
+    tix = String(ARM_DWT_CYCCNT);
+    rtc = String(now());
+
+//    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
+
+    PhotoD_val = analogRead(PhotoD);
+    PhotoD_val = analogRead(PhotoD);
+    PhotoD_val = analogRead(PhotoD);
 
 //    Cap1_val = analogRead(Cap1);
 //    Cap2_val = analogRead(Cap2);
@@ -165,14 +176,11 @@ time1 = micros();
     Cap4_val = 0;
     Cap5_val = 0;
 
-    PhotoD_val = analogRead(PhotoD);
-    PhotoD_val = analogRead(PhotoD);
-    PhotoD_val = analogRead(PhotoD);
-
-//    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
+    FSR1_val = analogRead(FSR1);
+    FSR2_val = analogRead(FSR2);
+    FSR3_val = analogRead(FSR3);
+    FSR4_val = analogRead(FSR4);
+    FSR5_val = analogRead(FSR5);
 
     debouncer1.update();
     debouncer2.update();
@@ -186,10 +194,6 @@ time1 = micros();
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
 
-    elmicros = String(SinceStart);
-    tix = String(ARM_DWT_CYCCNT);
-    rtc = String(now());
-
     // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
     int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
     if(sz <= Serial.availableForWrite()){
@@ -197,8 +201,8 @@ time1 = micros();
       Serial.println(Report);
     }
     
-// change some of the variable types so that they are smaller if they can be
-// change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example
+// change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example. opted for doing lastscan-scanspace
+   // need to think more about this tho when less tired
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
@@ -223,16 +227,11 @@ time1 = micros();
     lastKey4 = Key4_val;
     lastKey5 = Key5_val;
 
-    
-    //label,value,micros(),ARM_DWT_CYCCNT,RTC
-//    FSR1_Report = "FSR1,"+String(FSR1_val)+","+String(micros())+","+String(ARM_DWT_CYCCNT)+","+String(now());
-//    Serial.println(FSR1_Report);
-
 ////
-    time2 = micros();
-    tottime = time2-time1;
-    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
-    Serial.println(tottime);
+//    time2 = micros();
+//    tottime = time2-time1;
+//    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
+//    Serial.println(tottime);
 
 
 //  }
