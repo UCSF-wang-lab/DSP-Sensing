@@ -15,7 +15,7 @@ unsigned long time2;
 unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
-unsigned long RunTime = 600000000;  // in micros
+unsigned long RunTime = 5000000;  // in micros
 unsigned long starttime;
 unsigned long sample = 1;
 unsigned long n_samples = RunTime/ScanSpace;
@@ -137,9 +137,9 @@ void loop() {
 //  if (micros() < endtime) {
 //time1 = micros();
 
-  if (LastScan >= ScanSpace){
-  if (sample <= n_samples) {
-    sample = sample+1;
+  if(LastScan>=ScanSpace && (LastScan%ScanSpace==0 || LastScan%ScanSpace==1 || LastScan%ScanSpace==2 || LastScan%ScanSpace==(ScanSpace-1) || LastScan%ScanSpace==(ScanSpace-2))){
+//  if (sample <= n_samples) {
+//    sample = sample+1;
     LastScan = 0;
     
     FSR1_val = analogRead(FSR1);
@@ -148,14 +148,25 @@ void loop() {
     FSR4_val = analogRead(FSR4);
     FSR5_val = analogRead(FSR5);
 
-    Cap1_val = analogRead(Cap1);
-    Cap2_val = analogRead(Cap2);
-    Cap3_val = analogRead(Cap3);
-    Cap4_val = analogRead(Cap4);
-    Cap5_val = analogRead(Cap5);
+//    Cap1_val = analogRead(Cap1);
+//    Cap2_val = analogRead(Cap2);
+//    Cap3_val = analogRead(Cap3);
+//    Cap4_val = analogRead(Cap4);
+//    Cap5_val = analogRead(Cap5);
+
+    Cap1_val = 0;
+    Cap2_val = 0;
+    Cap3_val = 0;
+    Cap4_val = 0;
+    Cap5_val = 0;
 
     PhotoD_val = analogRead(PhotoD);
+    PhotoD_val = analogRead(PhotoD);
+    PhotoD_val = analogRead(PhotoD);
 
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
 
     debouncer1.update();
@@ -174,6 +185,9 @@ void loop() {
     // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
     Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
     Serial.println(Report);
+//Serial.println(FSR1_val);
+
+    
 
     
     // keyboard interaction with computer
@@ -212,7 +226,7 @@ void loop() {
 
 
 //  }
-  }
+//  }
   }
 }
 
