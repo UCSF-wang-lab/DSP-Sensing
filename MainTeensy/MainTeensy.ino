@@ -148,6 +148,7 @@ void loop() {
 //  if (sample <= n_samples) {
 //    sample = sample+1;
     LastScan = LastScan-ScanSpace;
+    elapsedMicros looptime;
 
 //    Serial.println(String(LastScan));
 
@@ -155,7 +156,7 @@ void loop() {
     tix = String(ARM_DWT_CYCCNT);
     rtc = String(now());
 
-//    EEG_val = analogRead(EEG);
+    EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
@@ -170,11 +171,11 @@ void loop() {
 //    Cap4_val = analogRead(Cap4);
 //    Cap5_val = analogRead(Cap5);
 
-    Cap1_val = 0;
-    Cap2_val = 0;
-    Cap3_val = 0;
-    Cap4_val = 0;
-    Cap5_val = 0;
+//    Cap1_val = 0;
+//    Cap2_val = 0;
+//    Cap3_val = 0;
+//    Cap4_val = 0;
+//    Cap5_val = 0;
 
     FSR1_val = analogRead(FSR1);
     FSR2_val = analogRead(FSR2);
@@ -194,16 +195,6 @@ void loop() {
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
 
-    // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
-    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
-    if(sz <= Serial.availableForWrite()){
-      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
-      Serial.println(Report);
-    }
-    
-// change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example. opted for doing lastscan-scanspace
-   // need to think more about this tho when less tired
-    
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
       Keyboard.write('1');
@@ -226,6 +217,20 @@ void loop() {
     lastKey3 = Key3_val;
     lastKey4 = Key4_val;
     lastKey5 = Key5_val;
+
+    // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
+    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
+//    while looptime < (ScanSpace-35){    // for scan spaces that are much larger than actual loop time, can try to send the data for a waiting period to minimize skipped packets, but will need to double check how long it takes to print the string when certain values are all at maximum levels since longer strings take longer to print
+    if(sz <= Serial.availableForWrite()){
+      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
+      Serial.println(Report);
+//      break
+    }
+  //    }
+// change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example. opted for doing lastscan-scanspace
+   // need to think more about this tho when less tired
+    
+
 
 ////
 //    time2 = micros();
