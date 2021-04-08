@@ -6,6 +6,11 @@
 elapsedMicros SinceStart;
 elapsedMicros LastScan;
 
+// clock variables
+String elmicros;
+String tix;
+String rtc;
+
 // for sampling rate
 unsigned long ScanSpace = 250;
 
@@ -137,7 +142,8 @@ void loop() {
 //  if (micros() < endtime) {
 //time1 = micros();
 
-  if(LastScan>=ScanSpace && (LastScan%ScanSpace==0 || LastScan%ScanSpace==1 || LastScan%ScanSpace==2 || LastScan%ScanSpace==(ScanSpace-1) || LastScan%ScanSpace==(ScanSpace-2))){
+//  if(LastScan>=ScanSpace && (LastScan%ScanSpace==0 || LastScan%ScanSpace==1 || LastScan%ScanSpace==2 || LastScan%ScanSpace==(ScanSpace-1) || LastScan%ScanSpace==(ScanSpace-2))){
+  if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
 //  if (sample <= n_samples) {
 //    sample = sample+1;
     LastScan = 0;
@@ -164,7 +170,7 @@ void loop() {
     PhotoD_val = analogRead(PhotoD);
     PhotoD_val = analogRead(PhotoD);
 
-    EEG_val = analogRead(EEG);
+//    EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
@@ -181,12 +187,21 @@ void loop() {
     Key4_val = debouncer4.read();
     Key5_val = debouncer5.read();
 
+    elmicros = String(SinceStart);
+    tix = String(ARM_DWT_CYCCNT);
+    rtc = String(now());
 
-    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., micros(), ARM_DWT_CYCCNT, RTC
-    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+String(SinceStart)+","+String(ARM_DWT_CYCCNT)+","+String(now());
+    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
+//    time1 = micros();
+    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
+//    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
+//    time2 = micros();
+//    tottime = time2-time1;
+//    Serial.println(sz);
+//    if(sizeof(Report) >= Serial.availableForWrite()){
     Serial.println(Report);
 //Serial.println(FSR1_val);
-
+//        }
     
 
     
