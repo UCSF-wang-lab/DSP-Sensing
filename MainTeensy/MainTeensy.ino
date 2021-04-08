@@ -129,7 +129,7 @@ void setup() {
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
   Keyboard.begin();
 
-  delay(10000);
+  delay(1000);
   Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
   starttime = micros();
@@ -140,9 +140,8 @@ void setup() {
 void loop() {
   
 //  if (micros() < endtime) {
-//time1 = micros();
+time1 = micros();
 
-//  if(LastScan>=ScanSpace && (LastScan%ScanSpace==0 || LastScan%ScanSpace==1 || LastScan%ScanSpace==2 || LastScan%ScanSpace==(ScanSpace-1) || LastScan%ScanSpace==(ScanSpace-2))){
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
 //  if (sample <= n_samples) {
 //    sample = sample+1;
@@ -191,19 +190,15 @@ void loop() {
     tix = String(ARM_DWT_CYCCNT);
     rtc = String(now());
 
-    // print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
-//    time1 = micros();
-    Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
-//    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
-//    time2 = micros();
-//    tottime = time2-time1;
-//    Serial.println(sz);
-//    if(sizeof(Report) >= Serial.availableForWrite()){
-    Serial.println(Report);
-//Serial.println(FSR1_val);
-//        }
+    // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
+    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
+    if(sz <= Serial.availableForWrite()){
+      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
+      Serial.println(Report);
+    }
     
-
+// change some of the variable types so that they are smaller if they can be
+// change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example
     
     // keyboard interaction with computer
     if (Key1_val == HIGH && lastKey1 == LOW) {
@@ -234,10 +229,10 @@ void loop() {
 //    Serial.println(FSR1_Report);
 
 ////
-//    time2 = micros();
-//    tottime = time2-time1;
-//    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
-//    Serial.println(tottime);
+    time2 = micros();
+    tottime = time2-time1;
+    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
+    Serial.println(tottime);
 
 
 //  }
