@@ -148,7 +148,7 @@ void loop() {
 //  if (sample <= n_samples) {
 //    sample = sample+1;
     LastScan = LastScan-ScanSpace;
-    elapsedMicros looptime;
+//    elapsedMicros looptime;
 
 //    Serial.println(String(LastScan));
 
@@ -171,11 +171,11 @@ void loop() {
 //    Cap4_val = analogRead(Cap4);
 //    Cap5_val = analogRead(Cap5);
 
-//    Cap1_val = 0;
-//    Cap2_val = 0;
-//    Cap3_val = 0;
-//    Cap4_val = 0;
-//    Cap5_val = 0;
+    Cap1_val = 0;
+    Cap2_val = 0;
+    Cap3_val = 0;
+    Cap4_val = 0;
+    Cap5_val = 0;
 
     FSR1_val = analogRead(FSR1);
     FSR2_val = analogRead(FSR2);
