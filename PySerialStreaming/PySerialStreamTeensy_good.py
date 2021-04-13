@@ -39,8 +39,8 @@ class ReadLine:
 # serial_port = 'COM8'
 # write_file_to = "20210303_fulltask.txt"
 
-serial_port = '/dev/cu.usbmodem89145501'
-write_file_to = 'exactly10min4khz_nsamples'
+serial_port = '/dev/cu.usbmodem89166801'
+write_file_to = 'RCS14_lowoff_day1'
 
 baud_rate = 4000000
 

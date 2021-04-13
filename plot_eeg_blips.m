@@ -1,12 +1,13 @@
 
-signal = two_4k_60us;
-fs = 4000;
-total_time = 1;
+% signal = signal;
+fs = 2000;
+total_time = 10;
 titL = '4kHz sampling, 1 sec recording, 5Hz stim, 60us pulse width @ 2mA';
 
 
 
 t = 0:1/fs:total_time-1/fs;
+% t = 1:length(signal);
 
 
 fig1 = figure(1);
