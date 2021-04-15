@@ -156,7 +156,7 @@ void loop() {
     tix = String(ARM_DWT_CYCCNT);
     rtc = String(now());
 
-    EEG_val = analogRead(EEG);
+//    EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);
     EEG_val = analogRead(EEG);

@@ -1,8 +1,8 @@
 elapsedMicros SinceStart;
 elapsedMicros LastScan;
 
-unsigned long RunTime = 10000000;  // in micros
-unsigned long ScanSpace = 500;   // in micros
+unsigned long RunTime = 5000000;  // in micros
+unsigned long ScanSpace = 250;   // in micros
 unsigned long n_samples = RunTime / ScanSpace;
 unsigned long starttime;
 unsigned long sample = 1;
