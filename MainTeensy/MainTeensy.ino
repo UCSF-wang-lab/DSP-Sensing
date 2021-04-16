@@ -20,7 +20,7 @@ unsigned long time2;
 unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
-unsigned long RunTime = 5000000;  // in micros
+unsigned long RunTime = 10000000;  // in micros
 unsigned long starttime;
 unsigned long sample = 1;
 unsigned long n_samples = RunTime/ScanSpace;
@@ -129,8 +129,8 @@ void setup() {
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
   Keyboard.begin();
 
-  delay(10000);
-  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
+  delay(2000);
+//  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
 //  starttime = micros();
 //  endtime = starttime + RunTime;
@@ -145,8 +145,8 @@ void loop() {
   // i am too fucking tired to figure out why, but having the first part with lastscan>=scanspace ensures that it is always a 250us diff between samples even tho it always evaluates to true no matter what
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
 //  if((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1))){
-//  if (sample <= n_samples) {
-//    sample = sample+1;
+  if (sample <= n_samples) {
+    sample = sample+1;
     LastScan = LastScan-ScanSpace;
 //    elapsedMicros looptime;
 
@@ -223,7 +223,8 @@ void loop() {
 //    while looptime < (ScanSpace-35){    // for scan spaces that are much larger than actual loop time, can try to send the data for a waiting period to minimize skipped packets, but will need to double check how long it takes to print the string when certain values are all at maximum levels since longer strings take longer to print
     if(sz <= Serial.availableForWrite()){
       Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
-      Serial.println(Report);
+//      Serial.println(Report);
+      Serial.println(EEG_val);
 //      break
     }
   //    }
@@ -239,7 +240,7 @@ void loop() {
 //    Serial.println(tottime);
 
 
-//  }
+  }
 //  }
   }
 }
