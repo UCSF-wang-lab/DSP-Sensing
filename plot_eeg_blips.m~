@@ -1,16 +1,13 @@
 %% required input
 
-filename = 'ecg_dummy_data2';
+filename = 'ecg_dummy_data';
 fs = 2000;
 % total_time = 10;
 
-%% read file, plot filtered and unfiltered
+%% open file, plot filtered and unfiltered
 
 a = fopen(filename);
-% signal = fread(a,inf,'double');
-signal = textscan(a,'%s');
-signal = str2num(cell2mat(signal{1,1}));
-fclose(a);
+signal = fread(a,inf,'double');
 
 % t = 0:1/fs:total_time-1/fs;
 t = 1:length(signal);

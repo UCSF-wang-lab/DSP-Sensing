@@ -1,7 +1,7 @@
 elapsedMicros SinceStart;
 elapsedMicros LastScan;
 
-unsigned long RunTime = 5000000;  // in micros
+unsigned long RunTime = 10000000;  // in micros
 unsigned long ScanSpace = 250;   // in micros
 unsigned long n_samples = RunTime / ScanSpace;
 unsigned long starttime;
@@ -21,7 +21,7 @@ void setup() {
 
   //  pinMode(EEG,INPUT_DISABLE);
 
-  delay(2000);
+  delay(5000);
 
   starttime = micros();
   endtime = starttime + RunTime;
