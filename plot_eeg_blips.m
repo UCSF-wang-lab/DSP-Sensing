@@ -1,15 +1,23 @@
 %% required input
 
-filename = 'ecg_dummy_data2';
-fs = 2000;
+filename = 'rcs14_olclickc_3ft_80sec_NECKFOOT';
+fs = 4000;
 % total_time = 10;
 
 %% read file, plot filtered and unfiltered
 
 a = fopen(filename);
 % signal = fread(a,inf,'double');
-signal = textscan(a,'%s');
-signal = str2num(cell2mat(signal{1,1}));
+s = textscan(a,'%s');
+% signal = cell2mat(signal{1,1});
+% signal = str2num(signal);
+
+signal = [];
+n = size(s{1,1}, 1);
+for i = 1:n
+    signal = [signal str2num(s{1,1}{i})];
+end
+
 fclose(a);
 
 % t = 0:1/fs:total_time-1/fs;
