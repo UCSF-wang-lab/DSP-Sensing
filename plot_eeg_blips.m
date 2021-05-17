@@ -1,8 +1,7 @@
 %% required input
 
-filename = 'rcs14_olclickc_3ft_80sec_NECKFOOT';
+filename = 'rcs14_olclickc_80sec_NECKFOOT';
 fs = 4000;
-% total_time = 10;
 
 %% read file, plot filtered and unfiltered
 
@@ -20,8 +19,9 @@ end
 
 fclose(a);
 
-% t = 0:1/fs:total_time-1/fs;
-t = 1:length(signal);
+total_time = length(signal)/fs;
+t = 0:1/fs:total_time-1/fs;
+% t = 1:length(signal);
 
 filtered = bandstop(signal,[40,70],fs);
 
@@ -57,3 +57,8 @@ plot(periodogram(filtered));
 xlabel('Frequency (Hz)')
 xlim([1,100])
 ylim([0,1000000])
+
+saveas(fig1,'fig1','fig')
+saveas(fig2,'fig2','fig')
+saveas(fig3,'fig3','fig')
+saveas(fig4,'fig4','fig')

@@ -20,7 +20,7 @@ unsigned long time2;
 unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
-unsigned long RunTime = 10000000;  // in micros
+unsigned long RunTime = 5000000;  // in micros
 unsigned long starttime;
 unsigned long sample = 1;
 unsigned long n_samples = RunTime/ScanSpace;
@@ -224,7 +224,7 @@ void loop() {
     if(sz <= Serial.availableForWrite()){
       Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
 //      Serial.println(Report);
-      Serial.println(EEG_val);
+      Serial.println(FSR1_val);
 //      break
     }
   //    }
