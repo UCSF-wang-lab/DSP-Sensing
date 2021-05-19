@@ -13,7 +13,7 @@ int FSRval;
 CapacitiveSensor Cap1 = CapacitiveSensor(19, 20);
 long Cap1_Val;
 
-unsigned long RunTime = 5000;
+unsigned long RunTime = 100000;
 unsigned long time1;
 unsigned long time2;
 unsigned long tottime;
@@ -32,12 +32,12 @@ void loop() {
 //        delay(5);
 
     time1 = micros();
-    Cap1_Val = Cap1.capacitiveSensor(30);
+    Cap1_Val = Cap1.capacitiveSensor(15);
     time2 = micros();
     tottime = time2 - time1;
 //        Serial.print(FSRval);
 //        Serial.print(" ");
-//    Serial.println(Cap1_Val);
-        Serial.println(tottime);
+    Serial.println(Cap1_Val);
+//        Serial.println(tottime);
   }
 }
