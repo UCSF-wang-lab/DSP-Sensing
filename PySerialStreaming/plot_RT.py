@@ -76,7 +76,7 @@ def animate(i):
     # plt.plot(data)
     # plt.plot(vals)
     # line.set_data(vals)
-    line, = ax.plot(vals, lw=2)
+    line, = ax.plot(vals, lw=2,color='k')
     # plt.show()
     return line,
 
