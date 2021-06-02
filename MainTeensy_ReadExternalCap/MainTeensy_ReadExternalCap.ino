@@ -20,7 +20,7 @@ unsigned long time2;
 unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
-unsigned long RunTime = 20000000;  // in micros
+unsigned long RunTime = 50000000;  // in micros
 unsigned long starttime;
 unsigned long sample = 1;
 unsigned long n_samples = RunTime/ScanSpace;

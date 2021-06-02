@@ -9,7 +9,7 @@ const int upper_in = 3800;
 const int lower_out = 0;
 const int upper_out = 1023;
 
-unsigned long RunTime = 10000;
+unsigned long RunTime = 500000;
 unsigned long time1;
 unsigned long time2;
 unsigned long tottime;
@@ -35,7 +35,7 @@ void loop() {
   Cap1_report = map(Cap1_val,lower_in,upper_in,lower_out,upper_out);
   Cap1_report = constrain(Cap1_report,lower_out,upper_out);
 //  Serial.print(',');
-  Serial.println(Cap1_report);
+//  Serial.println(Cap1_report);
 
   analogWrite(A14,Cap1_report);   //analogWrite only takes a couple us
 

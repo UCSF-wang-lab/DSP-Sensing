@@ -20,7 +20,7 @@ unsigned long time2;
 unsigned long tottime;
 
 // for predetermining how many samples there should be, for testing purposes
-unsigned long RunTime = 1000000;  // in micros
+unsigned long RunTime = 15000000;  // in micros
 unsigned long starttime;
 unsigned long sample = 1;
 unsigned long n_samples = RunTime/ScanSpace;
@@ -55,8 +55,11 @@ const int Cap5 = 23;
 long Cap5_val;
 
 
-const int EEG = 40;
-int EEG_val;
+const int EEGLeft = 39;
+int EEGLeft_val;
+
+const int EEGRight = 40;
+int EEGRight_val;
 
 
 const int PhotoD = 41;
@@ -108,7 +111,8 @@ void setup() {
 
   pinMode(PhotoD,INPUT_DISABLE);
   
-  pinMode(EEG, INPUT_DISABLE);
+  pinMode(EEGRight, INPUT_DISABLE);
+  pinMode(EEGLeft, INPUT_DISABLE);
   
   pinMode(Key1,INPUT);
   debouncer1.attach(Key1);
@@ -130,7 +134,7 @@ void setup() {
   Keyboard.begin();
 
   delay(2000);
-//  Serial.println("EEG,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
+//  Serial.println("EEGLeft,EEGRight,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
   
 //  starttime = micros();
 //  endtime = starttime + RunTime;
@@ -156,12 +160,13 @@ void loop() {
     tix = String(ARM_DWT_CYCCNT);
     rtc = String(now());
 
-//    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
-    EEG_val = analogRead(EEG);
 
-    PhotoD_val = analogRead(PhotoD);
+    EEGLeft_val = analogRead(EEGLeft);
+    EEGLeft_val = analogRead(EEGLeft);
+
+    EEGRight_val = analogRead(EEGRight);
+    EEGRight_val = analogRead(EEGRight);
+
     PhotoD_val = analogRead(PhotoD);
     PhotoD_val = analogRead(PhotoD);
 
@@ -218,13 +223,13 @@ void loop() {
     lastKey4 = Key4_val;
     lastKey5 = Key5_val;
 
-    // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
-    int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
+    // if there is space in the serial buffer, print timestamps: EEGRight_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
+    int sz = sizeof(String(EEGLeft_val)+","+String(EEGRight_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc);
 //    while looptime < (ScanSpace-35){    // for scan spaces that are much larger than actual loop time, can try to send the data for a waiting period to minimize skipped packets, but will need to double check how long it takes to print the string when certain values are all at maximum levels since longer strings take longer to print
     if(sz <= Serial.availableForWrite()){
-      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
+      Report = String(EEGLeft_val)+","+String(EEGRight_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc;
 //      Serial.println(Report);
-      Serial.println(EEG_val);
+      Serial.println(EEGRight_val);
 //      break
     }
   //    }
