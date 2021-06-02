@@ -133,7 +133,7 @@ void setup() {
   Serial.begin(9600);   // baud rate irrelevant for teensy but have to initialize
   Keyboard.begin();
 
-  delay(7000);
+  delay(3000);
 //  Serial.println("EEGLeft,EEGRight,PhotoD,Cap1,Cap2,Cap3,Cap4,Cap5,FSR1,FSR2,FSR3,FSR4,FSR5,Key1,Key2,Key3,Key4,Key5,ElapsedMicros,Ticks,RTC");
 
     Serial.println("EEGLeft,EEGRight,ElapsedMicros");
