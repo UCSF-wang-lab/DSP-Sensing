@@ -1,0 +1,71 @@
+% required input
+
+filename = 'rcs14_olclickc_80sec_NECKFOOT';
+fs = 4000;
+
+data = ConvertDSPtxt(filename);
+
+% plot filtered and unfiltered
+EEGLeft = data.EEGLeft;
+EEGRight = data.EEGRight;
+time = data.ElapsedMicros-data.ElapsedMicros(1);
+time = time/1000000;
+
+EEGLeft_filtered = bandstop(EEGLeft,[40,70],fs);
+EEGRight_filtered = bandstop(EEGRight,[40,70],fs);
+
+fig1_title = 'Left Raw'
+fig1 = figure(1);
+plot(t,EEGLeft);
+title(fig1_title);
+xlabel('Time (s)')
+ylabel('Analog')
+ylim([0,1000])
+
+fig2 = figure(2);
+plot(t,EEGLeft_filtered);
+title('Left Filtered');
+xlabel('Time (s)')
+ylabel('Analog')
+ylim([0,1000])
+
+fig3 = figure(3);
+plot(t,EEGRight);
+title('Right Raw');
+xlabel('Time (s)')
+ylabel('Analog')
+ylim([0,1000])
+
+fig4 = figure(4);
+plot(t,EEGRight_filtered);
+title('Right Filtered');
+xlabel('Time (s)')
+ylabel('Analog')
+ylim([0,1000])
+
+% fig2 = figure(2);
+% plot(periodogram(signal));
+% title(titL);
+% xlabel('Frequency (Hz)')
+% xlim([1,100])
+% ylim([0,1000000])
+% ylabel('dB')
+
+% fig3 = figure(3);
+% plot(t,filtered);
+% title(titL);
+% xlabel('Time (s)')
+% ylabel('Analog')
+% ylim([0,1000])
+% 
+% fig4 = figure(4);
+% plot(periodogram(filtered));
+% title(titL);
+% xlabel('Frequency (Hz)')
+% xlim([1,100])
+% ylim([0,1000000])
+
+saveas(fig1,'fig1','fig')
+saveas(fig2,'fig2','fig')
+saveas(fig3,'fig3','fig')
+saveas(fig4,'fig4','fig')
