@@ -24,7 +24,7 @@ filename = 'singleecg5_twoipgs_leftclavicle_200us_3rd';
 
 fs = 4000;
 
-data = ConvertDSPtxt(filename);
+data = ConvertTeensyTxt(filename);
 
 % plot filtered and unfiltered
 EEGLeft = data.EEGLeft;
