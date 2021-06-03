@@ -40,7 +40,8 @@ class ReadLine:
 # write_file_to = "20210303_fulltask.txt"
 
 serial_port = '/dev/cu.usbmodem89166801'
-write_file_to = 'test'
+write_file_to = 'singleecg5_twoipgs_leftclavicle_200us_3rd'
+# write_file_to = 'singleolimex_twoipgs_leftclavicle_200us_2nd'
 
 baud_rate = 4000000
 

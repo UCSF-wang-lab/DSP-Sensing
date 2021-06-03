@@ -1,6 +1,27 @@
 % required input
 
-filename = 'test';
+% filename = 'singleeeg_twoipgs_leftclavicle_120us_2nd';
+%%%% this works tho the right side isn't THAT big of a deflection
+% 
+% filename = 'singleeeg_twoipgs_leftclavicle_200us';
+%%%% this looks good, tho you can see the little 0mA pulses throughout
+
+% filename = 'singleeeg_twodiagonal_leftclavicle_200us';
+%looks pretty good
+
+% filename = 'singleeeg_twodiagonal_leftribs_200';
+%nope
+
+filename = 'singleecg5_twoipgs_leftclavicle_200us_3rd';
+% filename = 'singleolimex_twoipgs_leftclavicle_200us';
+
+
+
+
+
+% NEED TO TEST ECG 5 NEVER BEEN TESTED
+% AND GAIN IS INCREASED ON OLIMEX
+
 fs = 4000;
 
 data = ConvertDSPtxt(filename);
