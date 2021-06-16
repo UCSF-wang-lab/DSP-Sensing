@@ -143,7 +143,7 @@ void loop() {
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
 //  if (sample <= n_samples) {
 //    time1 = micros();
-    sample = sample+1;
+//    sample = sample+1;
     LastScan = LastScan-ScanSpace;
 
     elmicros = String(SinceStart);
