@@ -141,7 +141,7 @@ void loop() {
 
   // i am too fucking tired to figure out why, but having the first part with lastscan>=scanspace ensures that it is always a 250us diff between samples even tho it always evaluates to true no matter what
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
-  if (sample <= n_samples) {
+//  if (sample <= n_samples) {
 //    time1 = micros();
     sample = sample+1;
     LastScan = LastScan-ScanSpace;
@@ -229,7 +229,7 @@ void loop() {
 //    Serial.println(tottime);
 
 
-  }
+//  }
   }
 }
 
