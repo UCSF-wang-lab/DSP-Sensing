@@ -3,8 +3,8 @@ const int Cap1 = 0;
 long Cap1_val;
 long Cap1_report;
 
-const int lower_in = 4200;
-const int upper_in = 5200;
+const int lower_in = 3800;
+const int upper_in = 4800;
 
 const int lower_out = 0;
 const int upper_out = 1000;
