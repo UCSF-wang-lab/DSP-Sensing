@@ -143,7 +143,7 @@ void loop() {
   if(LastScan>=ScanSpace && ((LastScan%ScanSpace>=0 && LastScan%ScanSpace<6) || (LastScan%ScanSpace>=(ScanSpace-5) && LastScan%ScanSpace<=(ScanSpace-1)))){
 //  if (sample <= n_samples) {
 //    time1 = micros();
-//    sample = sample+1;
+    sample = sample+1;
     LastScan = LastScan-ScanSpace;
 
     elmicros = String(SinceStart);
@@ -215,14 +215,14 @@ void loop() {
     // if there is space in the serial buffer, print timestamps: EEG_val, PhotoD_val, Cap1_val, ..., FSR1_val, FSR2_val, ...,  Key1_val, ..., elapsedmicros(), ARM_DWT_CYCCNT, RTC
     int sz = sizeof(String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc+","+String(ScanSpace));
     if(sz <= Serial.availableForWrite()){
-      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc+","+String(ScanSpace));
+      Report = String(EEG_val)+","+String(PhotoD_val)+","+String(Cap1_val)+","+String(Cap2_val)+","+String(Cap3_val)+","+String(Cap4_val)+","+String(Cap5_val)+","+String(FSR1_val)+","+String(FSR2_val)+","+String(FSR3_val)+","+String(FSR4_val)+","+String(FSR5_val)+","+String(Key1_val)+","+String(Key2_val)+","+String(Key3_val)+","+String(Key4_val)+","+String(Key5_val)+","+elmicros+","+tix+","+rtc+","+String(ScanSpace);
       Serial.println(Report);
 //      Serial.println(Cap5_val);
     }
 // change it so that it always runs sampling if SinceStart%ScanSpace instead? or LastScan%ScanSpace == 0? Otherwise could there be a cumulative drift if it always scans at 251us for example. opted for doing lastscan-scanspace
    // need to think more about this tho when less tired
     
-
+//
 //    time2 = micros();
 //    tottime = time2-time1;
 //    Serial.print("TIMEEEEEEEEEEEEEEEEEEEE = ");
